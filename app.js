@@ -1,6 +1,7 @@
 //! Primeiro, adicionar todos
 const formAddTodo = document.querySelector('.form-add-todo');
 const todosContainer = document.querySelector('.todos-container');
+const todos = document.querySelectorAll('li');
 
 formAddTodo.addEventListener('submit', e => {
     e.preventDefault();
@@ -15,4 +16,10 @@ formAddTodo.addEventListener('submit', e => {
     `;
 
     e.target.reset();
+});
+
+//! Segundo remover todos
+todosContainer.addEventListener('click', e => {
+    const clickedOnTrash = Array.from(e.target.classList).includes('delete');
+    clickedOnTrash ? e.target.parentElement.remove() : null;
 })
