@@ -1,25 +1,33 @@
 //! Primeiro, adicionar todos
 const formAddTodo = document.querySelector('.form-add-todo');
+const formSearchTodo = document.querySelector('.form-search input');
 const todosContainer = document.querySelector('.todos-container');
-const todos = document.querySelectorAll('li');
 
 formAddTodo.addEventListener('submit', e => {
     e.preventDefault();
 
-    const inputValue = e.target.add.value;
+    const inputValue = e.target.add.value.trim();
 
-    todosContainer.innerHTML += `
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span>${inputValue}</span>
-        <i class="far fa-trash-alt delete"></i>
-    </li>
-    `;
+    if (inputValue.length) {
+        todosContainer.innerHTML += `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>${inputValue}</span>
+            <i class="far fa-trash-alt delete"></i>
+        </li>
+        `;
 
-    e.target.reset();
+        e.target.reset();
+    }
 });
 
-//! Segundo remover todos
+//! Segundo, remover todos
 todosContainer.addEventListener('click', e => {
     const clickedOnTrash = Array.from(e.target.classList).includes('delete');
     clickedOnTrash ? e.target.parentElement.remove() : null;
+})
+
+//! Terceiro, buscar/filtrar todos
+formSearchTodo.addEventListener('input', e => {
+    const inputValue = e.target.value.trim()
+    Array.from(todosContainer.children)
 })
