@@ -28,6 +28,19 @@ todosContainer.addEventListener('click', e => {
 
 //! Terceiro, buscar/filtrar todos
 formSearchTodo.addEventListener('input', e => {
-    const inputValue = e.target.value.trim()
+    const inputValue = e.target.value.trim().toLowerCase();
+
     Array.from(todosContainer.children)
+        .filter(todo => !todo.textContent.trim().toLowerCase().includes(inputValue))
+        .forEach(todo => {
+            todo.classList.remove('d-flex');
+            todo.classList.add('hidden');
+        })
+    
+    Array.from(todosContainer.children)
+        .filter(todo => todo.textContent.trim().toLowerCase().includes(inputValue))
+        .forEach(todo => {
+            todo.classList.remove('hidden');
+            todo.classList.add('d-flex');
+        })
 })
