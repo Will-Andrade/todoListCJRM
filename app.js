@@ -1,5 +1,4 @@
 // TODO: Refactoring. Entender cada parte do código e criar funções únicas
-// TODO: Implementar nova remoção de todo usando data- e dataset
 const formAddTodo = document.querySelector('.form-add-todo');
 const formSearchTodo = document.querySelector('.form-search input');
 const todosContainer = document.querySelector('.todos-container');
@@ -24,7 +23,7 @@ const validateInputValue = e => {
     }
 };
 
-const deleteTodoHandler = e => {
+const deleteTodo = e => {
     const clickedOnTrash = Array.from(e.target.classList).includes('delete');
     if (clickedOnTrash) {
         document
@@ -33,32 +32,35 @@ const deleteTodoHandler = e => {
     }
 };
 
-const searchTodoHandler = e => {
-    //! transforma o valor do input
-    const inputValue = e.target.value.trim().toLowerCase();
+const hideTodos = ({ classList }) => {
+    classList.remove('d-flex');
+    classList.add('hidden');
+}
 
-    //! Cria um array dos todos do container
-    Array.from(todosContainer.children)
-    //! Filtra todos não compatíveis comparando com o input value
-        .filter(todo => !todo.textContent.trim().toLowerCase().includes(inputValue))
-    //! Cada todo que não conter o valor dentro do input é excluído
-        .forEach(todo => {
-            todo.classList.remove('d-flex');
-            todo.classList.add('hidden');
-        })
+const showTodos = ({ classList }) => {
+    classList.remove('hidden');
+    classList.add('d-flex');
+}
+
+const hideOrShowTodos = (searchQuery, todos) => {
+    todos
+        .filter(todo => 
+            !todo.textContent.trim().toLowerCase().includes(searchQuery))
+            .forEach(hideTodos)
     
-    //! Cria um array dos todos do container
-    Array.from(todosContainer.children)
-    //! Filtra todos compatíveis comparando com o input value
-        .filter(todo => todo.textContent.trim().toLowerCase().includes(inputValue))
-    //! Cada todo que conter o valor dentro do input será colocado na tela
-        .forEach(todo => {
-            todo.classList.remove('hidden');
-            todo.classList.add('d-flex');
-        })
+    todos
+        .filter(todo => 
+            todo.textContent.trim().toLowerCase().includes(searchQuery))
+            .forEach(showTodos)
+}
+
+const searchTodos = e => {
+    const searchQuery = e.target.value.trim().toLowerCase();
+    const todos = Array.from(document.querySelectorAll('[data-todo-item]'));
+    hideOrShowTodos(searchQuery, todos);
 };
 
 formAddTodo.addEventListener('submit', validateInputValue);
-todosContainer.addEventListener('click', deleteTodoHandler);
-formSearchTodo.addEventListener('input', searchTodoHandler);
+todosContainer.addEventListener('click', deleteTodo);
+formSearchTodo.addEventListener('input', searchTodos);
  
