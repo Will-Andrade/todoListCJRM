@@ -5,9 +5,9 @@ const formSearchTodo = document.querySelector('.form-search input');
 const todosContainer = document.querySelector('.todos-container');
 
 const createTodo = inputValue => todosContainer.innerHTML += `
-    <li class="list-group-item d-flex justify-content-between align-items-center">
+    <li class="list-group-item d-flex justify-content-between align-items-center" data-todo-item="${inputValue}">
         <span>${inputValue}</span>
-        <i class="far fa-trash-alt delete"></i>
+        <i class="far fa-trash-alt delete" data-todo-trash="${inputValue}"></i>
     </li>
 `;
 
@@ -25,11 +25,12 @@ const validateInputValue = e => {
 };
 
 const deleteTodoHandler = e => {
-    //! Verifica se o usuário clicou no ícone de lixeira
     const clickedOnTrash = Array.from(e.target.classList).includes('delete');
-    
-    //! Se clicou, o todo pai da lixeira é excluído
-    clickedOnTrash ? e.target.parentElement.remove() : null;
+    if (clickedOnTrash) {
+        document
+            .querySelector(`[data-todo-item="${e.target.dataset.todoTrash}"]`)
+            .remove();
+    }
 };
 
 const searchTodoHandler = e => {
