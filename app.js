@@ -1,3 +1,4 @@
+// TODO: Refactoring. Entender cada parte do código e criar funções únicas
 const formAddTodo = document.querySelector('.form-add-todo');
 const formSearchTodo = document.querySelector('.form-search input');
 const todosContainer = document.querySelector('.todos-container');
@@ -9,6 +10,8 @@ const createTodo = inputValue => todosContainer.innerHTML += `
     </li>
 `;
 
+const resetForm = form => form.reset();
+
 const validateInputValue = e => {
     e.preventDefault();
 
@@ -16,15 +19,17 @@ const validateInputValue = e => {
 
     if (inputValue.length) {
         createTodo(inputValue);
-        e.target.reset();
+        resetForm(e.target);
     }
 };
 
-const deleteTodo = ({ target: { classList, dataset } }) => {
-    const clickedOnTrash = Array.from(classList).includes('delete');
-    clickedOnTrash ? document
-        .querySelector(`[data-todo-item="${dataset.todoTrash}"]`).remove()
-        : null;
+const deleteTodo = e => {
+    const clickedOnTrash = Array.from(e.target.classList).includes('delete');
+    if (clickedOnTrash) {
+        document
+            .querySelector(`[data-todo-item="${e.target.dataset.todoTrash}"]`)
+            .remove();
+    }
 };
 
 const hideTodos = ({ classList }) => {
