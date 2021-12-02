@@ -1,4 +1,3 @@
-// TODO: Refactoring. Entender cada parte do código e criar funções únicas
 const formAddTodo = document.querySelector('.form-add-todo');
 const formSearchTodo = document.querySelector('.form-search input');
 const todosContainer = document.querySelector('.todos-container');
