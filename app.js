@@ -21,11 +21,12 @@ const addTodo = e => {
     }
 };
 
-const deleteTodo = ({ target: { classList, dataset } }) => {
-    const clickedOnTrash = classList.contains('delete');
+const deleteTodo = ({ target }) => {
+    const clickedOnTrash = target.classList.contains('delete');
     if (clickedOnTrash) {
         document
-            .querySelector(`[data-todo-item="${dataset.todoTrash}"]`).remove();
+            .querySelector(`[data-todo-item="${target.dataset.todoTrash}"]`)
+            .remove();
     }
 };
 
