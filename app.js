@@ -23,9 +23,10 @@ const addTodo = e => {
 
 const deleteTodo = ({ target: { classList, dataset } }) => {
     const clickedOnTrash = classList.contains('delete');
-    clickedOnTrash ? document
-        .querySelector(`[data-todo-item="${dataset.todoTrash}"]`).remove()
-        : null;
+    if (clickedOnTrash) {
+        document
+            .querySelector(`[data-todo-item="${dataset.todoTrash}"]`).remove();
+    }
 };
 
 const hideTodos = ({ classList }) => {
