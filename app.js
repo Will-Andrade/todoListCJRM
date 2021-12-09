@@ -30,35 +30,35 @@ const deleteTodo = ({ target }) => {
     }
 };
 
-const hideTodos = ({ classList }) => {
+const hideTodo = ({ classList }) => {
     classList.remove('d-flex');
     classList.add('hidden');
 }
 
-const showTodos = ({ classList }) => {
+const showTodo = ({ classList }) => {
     classList.remove('hidden');
     classList.add('d-flex');
 }
 
-const hideOrShowTodos = (searchQuery, todos) => {
+const hideOrShowTodo = (searchQuery, todos) => {
     todos
         .filter(todo => 
             !todo.textContent.trim().toLowerCase().includes(searchQuery))
-            .forEach(hideTodos)
+            .forEach(hideTodo)
     
     todos
         .filter(todo => 
             todo.textContent.trim().toLowerCase().includes(searchQuery))
-            .forEach(showTodos)
+            .forEach(showTodo)
 }
 
-const searchTodos = e => {
+const searchTodo = e => {
     const searchQuery = e.target.value.trim().toLowerCase();
     const todos = Array.from(document.querySelectorAll('[data-todo-item]'));
-    hideOrShowTodos(searchQuery, todos);
+    hideOrShowTodo(searchQuery, todos);
 };
 
 formAddTodo.addEventListener('submit', addTodo);
 todosContainer.addEventListener('click', deleteTodo);
-formSearchTodo.addEventListener('input', searchTodos);
+formSearchTodo.addEventListener('input', searchTodo);
  
