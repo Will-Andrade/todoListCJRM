@@ -2,14 +2,15 @@ const formAddTodo = document.querySelector('.form-add-todo');
 const formSearchTodo = document.querySelector('.form-search input');
 const todosContainer = document.querySelector('.todos-container');
 
-const createTodo = inputValue => todosContainer.innerHTML += `
+const createTodo = inputValue => {
+    todosContainer.innerHTML += `
     <li class="list-group-item d-flex justify-content-between align-items-center" data-todo-item="${inputValue}">
         <span>${inputValue}</span>
         <i class="far fa-trash-alt delete" data-todo-trash="${inputValue}"></i>
-    </li>
-`;
+    </li>`;
+}
 
-const validateInputValue = e => {
+const addTodo = e => {
     e.preventDefault();
 
     const inputValue = e.target.add.value.trim();
@@ -55,7 +56,7 @@ const searchTodos = e => {
     hideOrShowTodos(searchQuery, todos);
 };
 
-formAddTodo.addEventListener('submit', validateInputValue);
+formAddTodo.addEventListener('submit', addTodo);
 todosContainer.addEventListener('click', deleteTodo);
 formSearchTodo.addEventListener('input', searchTodos);
  
