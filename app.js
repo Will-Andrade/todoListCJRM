@@ -40,22 +40,23 @@ const showTodo = ({ classList }) => {
     classList.add('d-flex');
 }
 
-const hideOrShowTodo = (searchQuery, todos) => {
-    todos
-        .filter(todo => 
-            !todo.textContent.trim().toLowerCase().includes(searchQuery))
-            .forEach(hideTodo)
-    
-    todos
-        .filter(todo => 
-            todo.textContent.trim().toLowerCase().includes(searchQuery))
-            .forEach(showTodo)
+const hideOrShowTodo = todos => {
+    todos.forEach((todo, index) => todo.shouldBeVisible 
+        ? showTodo(todo[`todo${index}`]) : hideTodo(todo[`todo${index}`]));
 }
 
-const searchTodo = e => {
-    const searchQuery = e.target.value.trim().toLowerCase();
-    const todos = Array.from(document.querySelectorAll('[data-todo-item]'));
-    hideOrShowTodo(searchQuery, todos);
+const searchTodo = ({ target }) => {
+    const searchQuery = target.value.trim().toLowerCase();
+    const todos = Array.from(document.querySelectorAll('[data-todo-item]'))
+        .map((todo, index) => 
+            ({ 
+                [`todo${index}`]: todo, shouldBeVisible: todo.textContent
+                .trim()
+                .toLowerCase()
+                .includes(searchQuery) 
+            })
+        );
+    hideOrShowTodo(todos);
 };
 
 formAddTodo.addEventListener('submit', addTodo);
