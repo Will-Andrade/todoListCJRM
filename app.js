@@ -8,7 +8,7 @@ const createTodo = inputValue => {
         <span>${inputValue}</span>
         <i class="far fa-trash-alt delete" data-todo-trash="${inputValue}"></i>
     </li>`;
-}
+};
 
 const addTodo = e => {
     e.preventDefault();
@@ -33,17 +33,17 @@ const deleteTodo = ({ target }) => {
 const hideTodo = ({ classList }) => {
     classList.remove('d-flex');
     classList.add('hidden');
-}
+};
 
 const showTodo = ({ classList }) => {
     classList.remove('hidden');
     classList.add('d-flex');
-}
+};
 
 const hideOrShowTodo = todos => {
     todos.forEach((todo, index) => todo.shouldBeVisible 
         ? showTodo(todo[`todo${index}`]) : hideTodo(todo[`todo${index}`]));
-}
+};
 
 const searchTodo = ({ target }) => {
     const searchQuery = target.value.trim().toLowerCase();
