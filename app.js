@@ -30,36 +30,24 @@ const deleteTodo = ({ target }) => {
     }
 };
 
-const hideTodo = ({ classList }) => {
-    classList.remove('d-flex');
-    classList.add('hidden');
-};
-
-const showTodo = ({ classList }) => {
-    classList.remove('hidden');
-    classList.add('d-flex');
-};
-
-const hideOrShowTodo = todos => {
-    todos.forEach((todo, index) => todo.shouldBeVisible 
-        ? showTodo(todo[`todo${index}`]) : hideTodo(todo[`todo${index}`]));
+const filterTodos = ({ todo, shouldBeVisible }) => {
+    todo.classList.add(shouldBeVisible ? 'd-flex' : 'hidden');
+    todo.classList.remove(shouldBeVisible ? 'hidden' : 'd-flex');
 };
 
 const searchTodo = ({ target }) => {
     const searchQuery = target.value.trim().toLowerCase();
     const todos = Array.from(document.querySelectorAll('[data-todo-item]'))
-        .map((todo, index) => 
+        .map(todo => 
             ({ 
-                [`todo${index}`]: todo, shouldBeVisible: todo.textContent
-                .trim()
-                .toLowerCase()
-                .includes(searchQuery) 
+                todo, 
+                shouldBeVisible: todo.textContent.trim().toLowerCase().includes(searchQuery)
             })
         );
-    hideOrShowTodo(todos);
+    
+    todos.forEach(filterTodos);
 };
 
 formAddTodo.addEventListener('submit', addTodo);
 todosContainer.addEventListener('click', deleteTodo);
 formSearchTodo.addEventListener('input', searchTodo);
- 
