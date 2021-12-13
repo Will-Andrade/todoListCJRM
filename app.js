@@ -30,9 +30,11 @@ const deleteTodo = ({ target }) => {
     }
 };
 
-const filterTodos = ({ todo, shouldBeVisible }) => {
-    todo.classList.add(shouldBeVisible ? 'd-flex' : 'hidden');
-    todo.classList.remove(shouldBeVisible ? 'hidden' : 'd-flex');
+const filterTodos = todos => {
+    todos.forEach(({ todo, shouldBeVisible }) => {
+        todo.classList.add(shouldBeVisible ? 'd-flex' : 'hidden');
+        todo.classList.remove(shouldBeVisible ? 'hidden' : 'd-flex');
+    });
 };
 
 const searchTodo = ({ target }) => {
@@ -44,8 +46,7 @@ const searchTodo = ({ target }) => {
                 shouldBeVisible: todo.textContent.trim().toLowerCase().includes(searchQuery)
             })
         );
-    
-    todos.forEach(filterTodos);
+    filterTodos(todos);
 };
 
 formAddTodo.addEventListener('submit', addTodo);
